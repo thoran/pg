@@ -2,6 +2,10 @@
 # pg-restart
 
 # 20201123
-# 0.1.0
+# 0.2.0
 
-pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log restart
+if [ "$1" != "" ]; then
+	PGPORT=$1 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log restart
+else
+	pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log restart
+fi
