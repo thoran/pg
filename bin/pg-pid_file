@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# pg-pid_file
+
+# 20201123
+# 0.0.0
+
+echo /usr/local/var/postgres/postmaster.pid
