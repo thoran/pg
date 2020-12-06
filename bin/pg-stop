@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# pg-stop
+
+# 20201123
+# 0.0.0
+
+pg_ctl -D /usr/local/var/postgres stop
