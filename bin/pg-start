@@ -2,6 +2,10 @@
 # pg-start
 
 # 20201123
-# 0.0.0
+# 0.1.0
 
-pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+if [ "$1" != "" ]; then
+	PGPORT=$1 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+else
+	pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+fi
