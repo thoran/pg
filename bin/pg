@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# pg
+
+# 20201123
+# 0.0.0
+
+def sub_command
+  ARGV[0]
+end
+
+def main
+  exec "pg-#{sub_command}"
+end
+
+main
