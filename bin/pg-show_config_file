@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# pg-show_config_file
+
+# 20210917
+# 0.0.0
+
+psql -U postgres -c 'SHOW config_file'
