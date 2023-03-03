@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# pg-status
+
+# 20210917
+# 0.0.0
+
+pg_ctl status -D /usr/local/var/postgres/
