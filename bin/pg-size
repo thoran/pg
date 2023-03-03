@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# pg-size
+
+# 20230303
+# 0.0.0
+
+main() {
+	db_name=${1}
+	psql -U postgres -c "SELECT pg_size_pretty(pg_database_size('$db_name'));"
+}
+
+main $@
