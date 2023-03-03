@@ -1,15 +1,12 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env sh
 # pg
 
-# 20201123
-# 0.0.0
+# 20230303
+# 0.1.0
 
-def sub_command
-  ARGV[0]
-end
+main() {
+	sub_command="${1}"
+	eval "pg-${sub_command} ${2}"
+}
 
-def main
-  exec "pg-#{sub_command}"
-end
-
-main
+main $@
