@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# restart_postgres
+
+# 20201116
+# 0.0.0
+
+pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log restart
