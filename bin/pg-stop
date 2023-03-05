@@ -1,7 +1,29 @@
 #!/usr/bin/env sh
 # pg-stop
 
-# 20201123
-# 0.0.0
+# 20230305
+# 0.1.0
 
-pg_ctl -D /usr/local/var/postgres stop
+# Notes:
+# 1. This will work for anything other than Homebew-installed installations. Homebrew has the wrong datadir!
+# 2. Homebrew points to /opt/homebrew/share/postgresql/ but it is actually /opt/homebrew/var/postgresql/.
+# 3. This is a known issue: https://github.com/Homebrew/homebrew-core/issues/109644.
+
+datadir() {
+	configurations=`pg_config --configure`
+	for configuration in $configurations; do
+		stripped_configuration=$(echo $configuration | sed 's/.\(.*\)/\1/' | sed 's/\(.*\)./\1/')
+		switch=$(echo $stripped_configuration | awk -F= '{print $1}')
+		if [[ $switch == '--datadir' ]]; then
+			datadir=$(echo $stripped_configuration | awk -F= '{print $2}')
+			break
+		fi
+	done
+}
+
+main() {
+	datadir
+	pg_ctl -D ${datadir} stop
+}
+
+main $@

@@ -1,11 +1,33 @@
 #!/usr/bin/env sh
 # pg-start
 
-# 20201123
-# 0.1.0
+# 20230305
+# 0.2.0
 
-if [ "$1" != "" ]; then
-	PGPORT=$1 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
-else
-	pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
-fi
+# Notes:
+# 1. This will work for anything other than Homebew-installed installations. Homebrew has the wrong datadir!
+# 2. Homebrew points to /opt/homebrew/share/postgresql/ but it is actually /opt/homebrew/var/postgresql/.
+# 3. This is a known issue: https://github.com/Homebrew/homebrew-core/issues/109644.
+
+datadir() {
+	configurations=`pg_config --configure`
+	for configuration in $configurations; do
+		stripped_configuration=$(echo $configuration | sed 's/.\(.*\)/\1/' | sed 's/\(.*\)./\1/')
+		switch=$(echo $stripped_configuration | awk -F= '{print $1}')
+		if [[ $switch == '--datadir' ]]; then
+			datadir=$(echo $stripped_configuration | awk -F= '{print $2}')
+			break
+		fi
+	done
+}
+
+main() {
+	datadir
+	if [ "$1" != "" ]; then
+		PGPORT=$1 pg_ctl -D ${datadir} start
+	else
+		pg_ctl -D ${datadir} start
+	fi
+}
+
+main $@
